@@ -1,4 +1,4 @@
- <button
+<!--<button
  [routerLink]="['/login']">
   Logearse
  </button>
@@ -6,4 +6,36 @@
  <button
  [routerLink]="['/register']">
   Registrarse
- </button>
+ </button>-->
+
+
+<div class="container text-center mt-5">
+  <h1 class="display-4">¡Bienvenido a Library Of Ohara!</h1>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-6 text-white p-4">
+      <h3>¿Que es Library Of Ohara?</h3>
+      <p>Library Of Ohara es una aplicación para amantes de los libros donde podrás guardar
+        tu progreso como la cantidad de libros que hayas leido.</p>
+      <button (click)="loggin()">
+        Logearse
+      </button>
+
+      <button (click)="register()">
+        Registrarse
+      </button>
+    </div>
+    <div class="col-6 text-white p-4">
+      <div *ngIf="mostrarFormularioInicioSesion;else formularioRegistro">
+        <login></login>
+      </div>
+      <ng-template #formularioRegistro>
+       <register></register>
+      </ng-template>
+
+
+    </div>
+  </div>
+</div>

@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { InitComponent } from './init/init.component';
 import { LoginComponent } from './init/login/login.component';
 import { RegisterComponent } from './init/register/register.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { RegisterComponent } from './init/register/register.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideClientHydration(withEventReplay())
