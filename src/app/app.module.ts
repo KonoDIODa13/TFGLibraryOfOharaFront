@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
+import { RegisterComponent } from './pages/init/register/register.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './pages/init/login/login.component';
+import { InitComponent } from './pages/init/init.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HomeModule } from './pages/home/home.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { InitComponent } from './init/init.component';
-import { LoginComponent } from './init/login/login.component';
-import { RegisterComponent } from './init/register/register.component';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HomeModule,
+    HttpClientModule
   ],
   providers: [
     provideClientHydration(withEventReplay())

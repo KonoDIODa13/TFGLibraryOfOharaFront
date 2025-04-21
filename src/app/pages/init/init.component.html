@@ -29,10 +29,10 @@
     </div>
     <div class="col-6 text-white p-4">
       <div *ngIf="mostrarFormularioInicioSesion;else formularioRegistro">
-        <login></login>
+        <init-login></init-login>
       </div>
       <ng-template #formularioRegistro>
-       <register></register>
+       <init-register></init-register>
       </ng-template>
 
 

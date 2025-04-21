@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InitComponent } from './init/init.component';
-import { LoginComponent } from './init/login/login.component';
-import { RegisterComponent } from './init/register/register.component';
+import { InitComponent } from './pages/init/init.component';
+import { LoginComponent } from './pages/init/login/login.component';
+import { RegisterComponent } from './pages/init/register/register.component';
 
 const routes: Routes = [
   {
@@ -16,6 +16,10 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'home',
+    loadChildren: () => import("./pages/home/home.module").then(h => h.HomeModule),
   },
   {
     path: '**',

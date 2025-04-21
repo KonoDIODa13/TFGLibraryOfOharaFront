@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'register',
+  selector: 'init-register',
   standalone: false,
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
