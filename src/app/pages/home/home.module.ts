@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { LibraryComponent } from './library/library.component';
 import { HomeRoutingModule } from './home-routing.module';
+import { SharedModule } from '../../shared/shared.module';
 
 
 
@@ -12,7 +13,6 @@ import { HomeRoutingModule } from './home-routing.module';
   declarations: [
     HomeComponent,
     LibraryComponent,
-
   ],
   imports: [
     CommonModule,

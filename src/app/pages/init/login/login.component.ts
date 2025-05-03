@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from '../../../shared/model/Usuario';
-import { LibraryOfOharaService } from '../../../shared/library-of-ohara.service';
-import { AuthService } from '../../../shared/auth.service';
+import { LibraryOfOharaService } from '../../../shared/service/library-of-ohara.service';
 import { Router } from '@angular/router';
+import { response } from 'express';
 
 @Component({
   selector: 'init-login',
@@ -15,9 +15,8 @@ export class LoginComponent {
 
   usuario?: Usuario
 
-  constructor(private autenticacion:AuthService,
-     private service: LibraryOfOharaService,
-    private router:Router) { }
+  constructor(private service: LibraryOfOharaService,
+    private router: Router) { }
 
   public loginForm = new FormGroup({
     nombre: new FormControl('', Validators.required),
@@ -30,15 +29,28 @@ export class LoginComponent {
     const contra = this.loginForm.value.contrasenna!
     this.service.login(nombre, contra).subscribe({
       next: (data) => {
-        console.log(data)
-        this.usuario = data
-        this.autenticacion.setUsuario(this.usuario);
-        this.router.navigate(['/home']);
-
+        sessionStorage.setItem('usuario', JSON.stringify(data))
       },
       error: (error) => {
-        console.error('Error al obtener usuarios', error)
+        console.error('Error al realizar login', error)
       }
     })
+    this.getToken()
+  }
+
+  getToken() {
+    const usuarioSTR = sessionStorage.getItem('usuario')
+      this.usuario = JSON.parse(usuarioSTR!)
+    if (this.usuario) {
+      this.service.getToken(this.usuario).subscribe(
+        response => {
+          const token = response.headers.get('Authorization');
+          if (token) {
+            sessionStorage.setItem('token', token)
+            this.router.navigate(['/home']);
+          }
+        }
+      )
+    }
   }
 }

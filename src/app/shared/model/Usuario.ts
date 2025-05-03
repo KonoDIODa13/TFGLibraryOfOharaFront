@@ -1,8 +1,10 @@
-export interface Usuario {
-  id?:Number
-  nombre:string
-  apellidos:string
-  gmail: string
-  contrasenna:string
-  rol: string
- }
+export class Usuario {
+  constructor(
+    public nombre: string,
+    public apellidos: string,
+    public contrasenna: string,
+    public gmail: string,
+    public rol: string,
+    public id?:number,
+  ) {}
+}

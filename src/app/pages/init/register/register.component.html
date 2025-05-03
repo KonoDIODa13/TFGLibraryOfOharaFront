@@ -16,16 +16,18 @@
         <label class="p-2">Apellidos:</label>
         <input type="text" formControlName="apellidos" class="form-control" />
       </div>
-      <!--<p *ngIf="registerForm.get('apellido')?.touched && registerForm.get('apellido')?.invalid" class="text-danger">
-       Los Apellidos son obligatorio
-      </p>-->
+      <p *ngIf="registerForm.get('apellido')?.touched && registerForm.get('apellido')?.invalid" class="text-danger">
+        Los Apellidos son obligatorios
+      </p>
     </div>
 
     <div class="mt-3">
       <div class="mb-3 d-flex">
-        <label class="p-2">Contraseña:</label><input type="password" formControlName="contrasenna" class="form-control" />
+        <label class="p-2">Contraseña:</label><input type="password" formControlName="contrasenna"
+          class="form-control" />
       </div>
-      <div *ngIf="registerForm.get('contrasenna')?.touched && registerForm.get('contrasenna')?.invalid" class="text-danger">
+      <div *ngIf="registerForm.get('contrasenna')?.touched && registerForm.get('contrasenna')?.invalid"
+        class="text-danger">
         La contraseña es obligatoria
       </div>
     </div>

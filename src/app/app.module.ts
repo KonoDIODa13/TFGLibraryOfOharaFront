@@ -5,10 +5,12 @@ import { RegisterComponent } from './pages/init/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/init/login/login.component';
 import { InitComponent } from './pages/init/init.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './pages/home/home.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SharedModule } from './shared/shared.module';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,10 +24,19 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HomeModule,
+    SharedModule,
     HttpClientModule
   ],
   providers: [
-    provideClientHydration(withEventReplay())
+    provideClientHydration(withEventReplay()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:AuthInterceptor,
+      multi:true // para que no sobrescriba los otros interceptores
+    }
+  ],
+  exports:[
+    SharedModule
   ],
   bootstrap: [AppComponent]
 })
