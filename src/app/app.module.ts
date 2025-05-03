@@ -28,14 +28,14 @@ import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
     HttpClientModule
   ],
   providers: [
-    provideClientHydration(withEventReplay()),
     {
       provide: HTTP_INTERCEPTORS,
-      useClass:AuthInterceptor,
-      multi:true // para que no sobrescriba los otros interceptores
-    }
+      useClass: AuthInterceptor,
+      multi: true // para que no sobrescriba los otros interceptores
+    },
+    provideClientHydration(withEventReplay()),
   ],
-  exports:[
+  exports: [
     SharedModule
   ],
   bootstrap: [AppComponent]

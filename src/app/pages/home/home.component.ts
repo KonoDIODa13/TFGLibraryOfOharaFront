@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
   }
 
   deslogear(): void {
-    sessionStorage.setItem('usuario', JSON.stringify(null))
+    sessionStorage.setItem('usuario', "")
     sessionStorage.setItem('token', '')
     this.router.navigate(['/init']);
   }

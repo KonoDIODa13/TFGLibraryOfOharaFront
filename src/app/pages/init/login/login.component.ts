@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from '../../../shared/model/Usuario';
 import { LibraryOfOharaService } from '../../../shared/service/library-of-ohara.service';
@@ -11,12 +11,17 @@ import { response } from 'express';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   usuario?: Usuario
 
   constructor(private service: LibraryOfOharaService,
     private router: Router) { }
+
+  ngOnInit(): void {
+    sessionStorage.setItem('usuario', "")
+    sessionStorage.setItem('token', "")
+  }
 
   public loginForm = new FormGroup({
     nombre: new FormControl('', Validators.required),
@@ -29,18 +34,17 @@ export class LoginComponent {
     const contra = this.loginForm.value.contrasenna!
     this.service.login(nombre, contra).subscribe({
       next: (data) => {
-        sessionStorage.setItem('usuario', JSON.stringify(data))
+        this.usuario = data;
+        sessionStorage.setItem('usuario', JSON.stringify(this.usuario))
+        this.getToken()
       },
       error: (error) => {
         console.error('Error al realizar login', error)
       }
     })
-    this.getToken()
   }
 
   getToken() {
-    const usuarioSTR = sessionStorage.getItem('usuario')
-      this.usuario = JSON.parse(usuarioSTR!)
     if (this.usuario) {
       this.service.getToken(this.usuario).subscribe(
         response => {
@@ -51,6 +55,9 @@ export class LoginComponent {
           }
         }
       )
+    } else {
+      console.log("usuario es null")
+      console.log(this.usuario)
     }
   }
 }
