@@ -3,6 +3,7 @@ import { LibraryOfOharaService } from '../../shared/service/library-of-ohara.ser
 import { Router } from '@angular/router';
 import { Usuario } from '../../shared/model/Usuario';
 import { LibrosUsuario } from '../../shared/model/LibrosUsuario';
+import { Libro } from '../../shared/model/Libro';
 
 @Component({
   selector: 'home-page-home',
@@ -16,8 +17,10 @@ export class HomeComponent implements OnInit {
   librosUsuario?: LibrosUsuario[]
 
   mostrarSideBar: Boolean = false;
-  mostrarLibreria: Boolean = false;
-  mostrarLibros: Boolean = false;
+  mostrarbiblioteca: Boolean = false;
+  mostrarLibros: Boolean = true;
+
+  libros?: Libro[]
 
 
   constructor(
@@ -29,18 +32,14 @@ export class HomeComponent implements OnInit {
     const usuarioSTR = sessionStorage.getItem('usuario')!
     if (usuarioSTR) {
       this.usuario = JSON.parse(usuarioSTR);
+      this.getLibrosByUsuario()
     }
-    this.service.getLibrosByUsuario(this.usuario!.id!).subscribe({
-      next: (data) => {
-        console.log(data)
-        this.librosUsuario = data;
-      }
-    })
   }
 
+
   deslogear(): void {
-    sessionStorage.setItem('usuario', "")
-    sessionStorage.setItem('token', '')
+    sessionStorage.removeItem('usuario')
+    sessionStorage.removeItem('token')
     this.router.navigate(['/init']);
   }
 
@@ -48,14 +47,40 @@ export class HomeComponent implements OnInit {
     this.mostrarSideBar = !this.mostrarSideBar
   }
 
-  controladorLibreria() {
-    this.mostrarLibreria = !this.mostrarLibreria
+  controladorBiblioteca() {
+    this.mostrarbiblioteca = !this.mostrarbiblioteca
     this.mostrarLibros = false
+    this.getBiblioteca()
   }
 
   controladorLibros() {
     this.mostrarLibros = !this.mostrarLibros
-    this.mostrarLibreria = false
+    this.mostrarbiblioteca = false
+    this.getLibrosByUsuario()
+  }
+
+  public getLibrosByUsuario() {
+    this.service.getLibrosByUsuario(this.usuario!.id!).subscribe({
+      next: (data) => {
+        this.librosUsuario = data
+      }
+    })
+    if (!this.librosUsuario) {
+      this.librosUsuario = []
+    }
+    console.log(this.librosUsuario)
+  }
+  public getBiblioteca() {
+    this.service.getLibros().subscribe({
+      next: (data) => {
+        this.libros = data;
+      }
+    })
+  }
+
+  public verLibro(libro: Libro) {
+    console.log(libro)
+    this.router.navigate(['home/libro', libro.id]);
   }
 
 }

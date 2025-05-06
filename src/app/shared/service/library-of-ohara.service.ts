@@ -21,18 +21,15 @@ export class LibraryOfOharaService {
     return this.http.get<Usuario[]>(this.url + "usuario/todos")
   }
 
-  public login(nombre: string, contra: string): Observable<Usuario> {
+  public login(nombre: string, contra: string): Observable<HttpResponse<Usuario>> {
     const newUrl = this.url + "usuario/login?nombreUsuario=" + nombre + "&contrasenna=" + contra
-    return this.http.get<Usuario>(newUrl)
+    return this.http.get<Usuario>(newUrl, {
+      observe: 'response'  // Para poder leer las cabeceras
+    });
   }
 
-  public register(usuario: Usuario): Observable<Usuario> {
+  public register(usuario: Usuario): Observable<HttpResponse<Usuario>> {
     const newUrl = this.url + "usuario/registrar"
-    return this.http.post<Usuario>(newUrl, usuario)
-  }
-
-  public getToken(usuario: Usuario): Observable<HttpResponse<Usuario>> {
-    const newUrl = this.url + "usuario/token"
     return this.http.post<Usuario>(newUrl, usuario, {
       observe: 'response'  // Para poder leer las cabeceras
     });
@@ -56,5 +53,10 @@ export class LibraryOfOharaService {
   public getLibrosByUsuario(idUsuario: number): Observable<LibrosUsuario[]> {
     const newUrl = `${this.url}usuario/${idUsuario}/libros`
     return this.http.get<LibrosUsuario[]>(newUrl)
+  }
+
+  public getLibroByID(idLibro: number): Observable<Libro> {
+    const newUrl = `${this.url}libro/${idLibro}`
+    return this.http.get<Libro>(newUrl);
   }
 }

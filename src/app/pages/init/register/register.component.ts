@@ -34,24 +34,18 @@ export class RegisterComponent {
     const gmail = this.registerForm.value.gmail!
 
     const user: Usuario = new Usuario(nombre, apellidos, contra, gmail, "USER")
-    this.service.register(user).subscribe({
-      next: (data) => {
-        this.usuario = data
-        sessionStorage.setItem('usuario', JSON.stringify(this.usuario))
-        this.router.navigate(['/home']);
-      },
-      error: (error) => {
-        console.error('Error al insertar Usuario', error)
-      }
-    })
-    if (this.usuario != null) {
-      this.service.getToken(this.usuario).subscribe({
-        next: (response) => {
-          const token = response.headers.get('Authorization');
+    this.service.register(user).subscribe(
+      response => {
+        console.log(response)
+        if (response.status == 200) {
+          this.usuario = response.body!
+          const token = response.headers.get('Authorization')
+          sessionStorage.setItem('usuario', JSON.stringify(this.usuario))
           sessionStorage.setItem('token', token!)
           this.router.navigate(['/home']);
+        } else {
+          console.log("error en el registro")
         }
       })
     }
-  }
 }

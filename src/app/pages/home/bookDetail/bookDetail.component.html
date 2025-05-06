@@ -1,0 +1,17 @@
+<div class="card mb-3" *ngIf="libro">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img [src]="libro.portada" class="img-fluid rounded-start" alt="{{ libro.titulo }}">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ libro.titulo }}</h5>
+        <p class="card-text"><strong>Autor:</strong> {{ libro.autor.nombre }} {{ libro.autor.apellidos }}</p>
+        <p class="card-text"><strong>Género:</strong> {{ libro.genero.genero }}</p>
+        <p class="card-text"><strong>Publicado:</strong> {{ libro.fechaPublicacion  }} </p>
+        <p class="card-text"><strong>Sinopsis:</strong></p>
+        <p class="card-text">{{ libro.sinopsis }}</p>
+      </div>
+    </div>
+  </div>
+</div>

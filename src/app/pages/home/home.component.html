@@ -1,13 +1,13 @@
 <div class="container-fluid p-0">
   <div class="bg-black d-flex">
-    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-circle m-3 mt-4"
-      viewBox="0 0 16 16" color="white" (click)="controladorSideBar()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+      class="bi bi-person-circle m-3 mt-4" viewBox="0 0 16 16" color="white" (click)="controladorSideBar()">
       <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
       <path fill-rule="evenodd"
         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
     </svg>
 
-    <button class="btn btn-primary m-3" (click)="controladorLibreria()">
+    <button class="btn btn-primary m-3" (click)="controladorBiblioteca()">
       <i class="bi bi-list"></i> Mostrar Libreria
     </button>
 
@@ -32,17 +32,25 @@
     </div>
 
     <div class="col-8 p-3" *ngIf="mostrarLibros">
-      <p *ngIf="librosUsuario!.length==0";else mostrarLibros>aun no tienes libros en la lista</p>
-
-      <ng-container #mostrarLibros>
-
-      </ng-container>
+      <div *ngIf="librosUsuario!.length == 0; else mostrarLibros">
+        <p>Aún no hay libros en la lista.</p>
+        <p>Ve a la bliblioteca para buscar libros.</p>
+      </div>
+      <ng-template #mostrarLibros>
+      </ng-template>
     </div>
 
-    <div class="col-8 p-3" *ngIf="mostrarLibreria">
+    <div class="col-8 p-3" *ngIf="mostrarbiblioteca">
+        <p class="center">Biblioteca</p>
+        <div class="card h-100 w-50" *ngFor="let libro of this.libros">
+          <img [src]="libro.portada" class="card-img-top" alt="{{ libro.titulo }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ libro.titulo }}</h5>
+            <p class="card-text">Autor: {{ libro.autor.nombre }} {{ libro.autor.apellidos }}</p>
+            <button class="btn btn-primary" (click)="verLibro(libro)">Ver más</button>
+          </div>
+        </div>
 
-      <p>libros del usuario</p>
-      <i class="bi bi-person-circle" width="40" height="40" color="black"></i>
     </div>
   </div>
 </div>

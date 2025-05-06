@@ -35,9 +35,7 @@ import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
     },
     provideClientHydration(withEventReplay()),
   ],
-  exports: [
-    SharedModule
-  ],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

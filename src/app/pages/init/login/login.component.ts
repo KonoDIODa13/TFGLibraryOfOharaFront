@@ -32,32 +32,17 @@ export class LoginComponent implements OnInit {
   enviar() {
     const nombre = this.loginForm.value.nombre!
     const contra = this.loginForm.value.contrasenna!
-    this.service.login(nombre, contra).subscribe({
-      next: (data) => {
-        this.usuario = data;
-        sessionStorage.setItem('usuario', JSON.stringify(this.usuario))
-        this.getToken()
-      },
-      error: (error) => {
-        console.error('Error al realizar login', error)
-      }
-    })
-  }
-
-  getToken() {
-    if (this.usuario) {
-      this.service.getToken(this.usuario).subscribe(
-        response => {
-          const token = response.headers.get('Authorization');
-          if (token) {
-            sessionStorage.setItem('token', token)
-            this.router.navigate(['/home']);
-          }
+    this.service.login(nombre, contra).subscribe(
+      response => {
+        if (response.status == 200) {
+          this.usuario = response.body!
+          const token = response.headers.get('Authorization')
+          sessionStorage.setItem('usuario', JSON.stringify(this.usuario))
+          sessionStorage.setItem('token', token!)
+          this.router.navigate(['/home']);
+        } else {
+          console.log("error en el login")
         }
-      )
-    } else {
-      console.log("usuario es null")
-      console.log(this.usuario)
-    }
+      })
   }
 }
