@@ -32,24 +32,32 @@
     </div>
 
     <div class="col-8 p-3" *ngIf="mostrarLibros">
-      <div *ngIf="librosUsuario!.length == 0; else mostrarLibros">
+      <div *ngIf="librosUsuario; else nohaylibros">
+        <div class="card h-100 w-50" *ngFor="let libroUsuario of this.librosUsuario">
+          <img [src]="libroUsuario.libro.portada" class="card-img-top" alt="{{ libroUsuario.libro.titulo }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ libroUsuario.libro.titulo }}</h5>
+            <p class="card-text">Autor: {{ libroUsuario.libro.autor.nombre }} {{ libroUsuario.libro.autor.apellidos }}</p>
+            <button class="btn btn-primary" (click)="verLibro(libroUsuario.libro)">Ver más</button>
+          </div>
+        </div>
+      </div>
+      <ng-template #nohaylibros>
         <p>Aún no hay libros en la lista.</p>
         <p>Ve a la bliblioteca para buscar libros.</p>
-      </div>
-      <ng-template #mostrarLibros>
       </ng-template>
     </div>
 
     <div class="col-8 p-3" *ngIf="mostrarbiblioteca">
-        <p class="center">Biblioteca</p>
-        <div class="card h-100 w-50" *ngFor="let libro of this.libros">
-          <img [src]="libro.portada" class="card-img-top" alt="{{ libro.titulo }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ libro.titulo }}</h5>
-            <p class="card-text">Autor: {{ libro.autor.nombre }} {{ libro.autor.apellidos }}</p>
-            <button class="btn btn-primary" (click)="verLibro(libro)">Ver más</button>
-          </div>
+      <p class="center">Biblioteca</p>
+      <div class="card h-100 w-50" *ngFor="let libro of this.libros">
+        <img [src]="libro.portada" class="card-img-top" alt="{{ libro.titulo }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ libro.titulo }}</h5>
+          <p class="card-text">Autor: {{ libro.autor.nombre }} {{ libro.autor.apellidos }}</p>
+          <button class="btn btn-primary" (click)="verLibro(libro)">Ver más</button>
         </div>
+      </div>
 
     </div>
   </div>

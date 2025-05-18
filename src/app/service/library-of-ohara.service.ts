@@ -6,6 +6,7 @@ import { Libro } from '../model/Libro';
 import { Autor } from '../model/Autor';
 import { Genero } from '../model/Genero';
 import { LibrosUsuario } from '../model/LibrosUsuario';
+import { Estado } from '../model/Estado';
 
 
 @Injectable({
@@ -55,8 +56,28 @@ export class LibraryOfOharaService {
     return this.http.get<LibrosUsuario[]>(newUrl)
   }
 
+  public compruebaExisteLibroUsuario(idUsuario: number, idLibro: number): Observable<LibrosUsuario> {
+    const newUrl = `${this.url}usuario/${idUsuario}/libros/${idLibro}`
+    return this.http.get<LibrosUsuario>(newUrl)
+  }
+
   public getLibroByID(idLibro: number): Observable<Libro> {
     const newUrl = `${this.url}libro/${idLibro}`
     return this.http.get<Libro>(newUrl);
+  }
+
+  public annadirLibroUsuario(idUsuario: number, idLibro: number): Observable<LibrosUsuario> {
+    const newUrl = `${this.url}usuario/${idUsuario}/registrarLibro/${idLibro}`
+    return this.http.post<LibrosUsuario>(newUrl, '');
+  }
+
+  public borrarLibroUsuario(idUsuario: number, idLibro: number):Observable<string>{
+    const newUrl = `${this.url}usuario/${idUsuario}/eliminarLibro/${idLibro}`
+    return this.http.delete(newUrl, {responseType: 'text'});
+  }
+
+  public modificarEstadoLibro(idLibroUsuario:number, nuevoEstado: Estado):Observable<LibrosUsuario>{
+     const newUrl = `${this.url}usuario/${idLibroUsuario}/modificarEstado`
+    return this.http.patch<LibrosUsuario>(newUrl, {nuevoEstado});
   }
 }

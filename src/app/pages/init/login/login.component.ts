@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Usuario } from '../../../shared/model/Usuario';
-import { LibraryOfOharaService } from '../../../shared/service/library-of-ohara.service';
+import { Usuario } from '../../../model/Usuario';
+import { LibraryOfOharaService } from '../../../service/library-of-ohara.service';
 import { Router } from '@angular/router';
-import { response } from 'express';
 
 @Component({
   selector: 'init-login',
@@ -11,17 +10,12 @@ import { response } from 'express';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   usuario?: Usuario
 
   constructor(private service: LibraryOfOharaService,
     private router: Router) { }
-
-  ngOnInit(): void {
-    sessionStorage.setItem('usuario', "")
-    sessionStorage.setItem('token', "")
-  }
 
   public loginForm = new FormGroup({
     nombre: new FormControl('', Validators.required),
@@ -32,17 +26,22 @@ export class LoginComponent implements OnInit {
   enviar() {
     const nombre = this.loginForm.value.nombre!
     const contra = this.loginForm.value.contrasenna!
-    this.service.login(nombre, contra).subscribe(
-      response => {
-        if (response.status == 200) {
-          this.usuario = response.body!
-          const token = response.headers.get('Authorization')
-          sessionStorage.setItem('usuario', JSON.stringify(this.usuario))
-          sessionStorage.setItem('token', token!)
+
+    this.service.login(nombre, contra).subscribe({
+      next: response => {
+        const authHeader = response.headers.get('Authorization');
+        if (authHeader) {
+          this.usuario = response.body!;
+          sessionStorage.setItem('usuario', JSON.stringify(this.usuario));
+          sessionStorage.setItem('token', authHeader);
           this.router.navigate(['/home']);
         } else {
-          console.log("error en el login")
+          alert("No se recibió token de autenticación.");
         }
-      })
+      },
+      error: () => {
+        alert("Credenciales inválidas.");
+      }
+    });
   }
 }

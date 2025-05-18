@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LibraryOfOharaService } from '../../shared/service/library-of-ohara.service';
+import { LibraryOfOharaService } from '../../service/library-of-ohara.service';
 import { Router } from '@angular/router';
-import { Usuario } from '../../shared/model/Usuario';
-import { LibrosUsuario } from '../../shared/model/LibrosUsuario';
-import { Libro } from '../../shared/model/Libro';
+import { Usuario } from '../../model/Usuario';
+import { LibrosUsuario } from '../../model/LibrosUsuario';
+import { Libro } from '../../model/Libro';
 
 @Component({
   selector: 'home-page-home',
@@ -30,10 +30,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     const usuarioSTR = sessionStorage.getItem('usuario')!
-    if (usuarioSTR) {
-      this.usuario = JSON.parse(usuarioSTR);
-      this.getLibrosByUsuario()
-    }
+    this.usuario = JSON.parse(usuarioSTR);
+    console.log(this.usuario)
+    this.getLibrosByUsuario()
+
   }
 
 
@@ -60,16 +60,12 @@ export class HomeComponent implements OnInit {
   }
 
   public getLibrosByUsuario() {
-    this.service.getLibrosByUsuario(this.usuario!.id!).subscribe({
-      next: (data) => {
-        this.librosUsuario = data
-      }
-    })
-    if (!this.librosUsuario) {
-      this.librosUsuario = []
-    }
-    console.log(this.librosUsuario)
+    this.service.getLibrosByUsuario(this.usuario!.id!).subscribe(librosUsuario => {
+      this.librosUsuario = librosUsuario ?? [];
+      console.log(this.librosUsuario)
+    });
   }
+
   public getBiblioteca() {
     this.service.getLibros().subscribe({
       next: (data) => {

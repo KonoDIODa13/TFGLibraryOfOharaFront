@@ -1,16 +1,34 @@
-<div class="card mb-3" *ngIf="libro">
-  <div class="row g-0">
+<div class="card m-3">
+  <div class="row g-0" *ngIf="libro">
     <div class="col-md-4">
-      <img [src]="libro.portada" class="img-fluid rounded-start" alt="{{ libro.titulo }}">
+      <img [src]="libro.portada" class="img-fluid rounded-start m-1" alt="{{ libro.titulo }}">
     </div>
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title">{{ libro.titulo }}</h5>
         <p class="card-text"><strong>Autor:</strong> {{ libro.autor.nombre }} {{ libro.autor.apellidos }}</p>
         <p class="card-text"><strong>Género:</strong> {{ libro.genero.genero }}</p>
-        <p class="card-text"><strong>Publicado:</strong> {{ libro.fechaPublicacion  }} </p>
+        <p class="card-text"><strong>Publicado:</strong> {{ libro.fechaPublicacion }} </p>
         <p class="card-text"><strong>Sinopsis:</strong></p>
         <p class="card-text">{{ libro.sinopsis }}</p>
+        <div *ngIf="libroUsuario">
+          <p class="card-text"><strong>Estado:</strong> {{ libroUsuario.estado }} </p>
+          <p class="card-text" *ngIf="libroUsuario.estado!='SIN_EMPEZAR'"><strong>Fecha de inicio de la
+              lectura:</strong>
+            {{libroUsuario.fecha_inicio }}
+          </p>
+        </div>
+        <div class="mt-5">
+          <button class="btn btn-primary" *ngIf="!libroUsuario" (click)="annadirLista()">Añadir a la lista</button>
+          <button class="btn btn-danger" *ngIf="libroUsuario" (click)="eliminarLista()">Eliminar de la lista</button>
+          <button class="btn btn-secondary" (click)="volver()">Volver</button>
+          <p class="mt-5">Modificar el Estado:
+            <select [(ngModel)]="estado" (change)="modificarEstado()">
+              <option [defaultSelected]="">selecione una opcion:</option>
+              <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+            </select>
+          </p>
+        </div>
       </div>
     </div>
   </div>

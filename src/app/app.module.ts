@@ -9,8 +9,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './pages/home/home.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
-import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -24,7 +23,6 @@ import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
     AppRoutingModule,
     ReactiveFormsModule,
     HomeModule,
-    SharedModule,
     HttpClientModule
   ],
   providers: [

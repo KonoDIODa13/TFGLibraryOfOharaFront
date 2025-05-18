@@ -1,7 +1,7 @@
-import { Usuario } from './../../../shared/model/Usuario';
+import { Usuario } from '../../../model/Usuario';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { LibraryOfOharaService } from '../../../shared/service/library-of-ohara.service';
+import { LibraryOfOharaService } from '../../../service/library-of-ohara.service';
 import { Router } from '@angular/router';
 
 

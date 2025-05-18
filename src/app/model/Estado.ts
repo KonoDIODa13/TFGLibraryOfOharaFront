@@ -1,0 +1,3 @@
+export enum Estado{
+  SIN_EMPEZAR, LEYENDO, ACABADO, PAUSADO, DEJADO
+}
