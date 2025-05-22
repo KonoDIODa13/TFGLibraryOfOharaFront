@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from '../../../model/Usuario';
 import { LibraryOfOharaService } from '../../../service/library-of-ohara.service';

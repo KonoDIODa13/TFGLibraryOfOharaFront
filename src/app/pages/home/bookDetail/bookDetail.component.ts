@@ -6,6 +6,7 @@ import { LibraryOfOharaService } from '../../../service/library-of-ohara.service
 import { Usuario } from '../../../model/Usuario';
 import { LibrosUsuario } from '../../../model/LibrosUsuario';
 import { Estado } from '../../../model/Estado';
+import { log } from 'node:console';
 
 @Component({
   selector: 'book-detail',
@@ -89,7 +90,16 @@ export class BookDetailComponent implements OnInit {
   }
 
   modificarEstado() {
-    this.service.modificarEstadoLibro(this.libroUsuario!.id!, this.estado)
+    console.log(this.estado);
+    console.log(this.libroUsuario?.id)
+
+    this.service.modificarEstadoLibro(this.libroUsuario!.id!, this.estado).subscribe(
+      (respuesta) => {
+        alert("Estado del libro modificado.")
+        this.libroUsuario =respuesta
+    })
+    this.estado= Estado.SIN_EMPEZAR;
+
   }
 
   parseEstado(est: string): Estado {

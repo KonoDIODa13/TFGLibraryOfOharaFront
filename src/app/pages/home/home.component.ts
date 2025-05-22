@@ -48,15 +48,17 @@ export class HomeComponent implements OnInit {
   }
 
   controladorBiblioteca() {
-    this.mostrarbiblioteca = !this.mostrarbiblioteca
+    this.mostrarbiblioteca = true
     this.mostrarLibros = false
     this.getBiblioteca()
+    this.controladorSideBar()
   }
 
   controladorLibros() {
-    this.mostrarLibros = !this.mostrarLibros
+    this.mostrarLibros = true
     this.mostrarbiblioteca = false
     this.getLibrosByUsuario()
+    this.controladorBiblioteca()
   }
 
   public getLibrosByUsuario() {

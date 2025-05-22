@@ -29,7 +29,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true // para que no sobrescriba los otros interceptores
+      multi: true // para que no se sobrescriba los otros interceptores
     },
     provideClientHydration(withEventReplay()),
   ],

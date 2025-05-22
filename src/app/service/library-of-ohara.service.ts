@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from '../model/Usuario';
@@ -71,13 +71,14 @@ export class LibraryOfOharaService {
     return this.http.post<LibrosUsuario>(newUrl, '');
   }
 
-  public borrarLibroUsuario(idUsuario: number, idLibro: number):Observable<string>{
+  public borrarLibroUsuario(idUsuario: number, idLibro: number): Observable<string> {
     const newUrl = `${this.url}usuario/${idUsuario}/eliminarLibro/${idLibro}`
-    return this.http.delete(newUrl, {responseType: 'text'});
+    return this.http.delete(newUrl, { responseType: 'text' });
   }
 
-  public modificarEstadoLibro(idLibroUsuario:number, nuevoEstado: Estado):Observable<LibrosUsuario>{
-     const newUrl = `${this.url}usuario/${idLibroUsuario}/modificarEstado`
-    return this.http.patch<LibrosUsuario>(newUrl, {nuevoEstado});
+  modificarEstadoLibro(idLibroUsuario: number, nuevoEstado: Estado): Observable<any> {
+    return this.http.patch(`${this.url}usuario/${idLibroUsuario}/modificarEstado`, JSON.stringify(nuevoEstado), {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
   }
 }

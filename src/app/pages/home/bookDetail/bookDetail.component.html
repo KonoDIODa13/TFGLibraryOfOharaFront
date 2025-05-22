@@ -15,19 +15,21 @@
           <p class="card-text"><strong>Estado:</strong> {{ libroUsuario.estado }} </p>
           <p class="card-text" *ngIf="libroUsuario.estado!='SIN_EMPEZAR'"><strong>Fecha de inicio de la
               lectura:</strong>
-            {{libroUsuario.fecha_inicio }}
+            {{libroUsuario.fechaInicio }}
           </p>
         </div>
         <div class="mt-5">
           <button class="btn btn-primary" *ngIf="!libroUsuario" (click)="annadirLista()">Añadir a la lista</button>
           <button class="btn btn-danger" *ngIf="libroUsuario" (click)="eliminarLista()">Eliminar de la lista</button>
           <button class="btn btn-secondary" (click)="volver()">Volver</button>
-          <p class="mt-5">Modificar el Estado:
-            <select [(ngModel)]="estado" (change)="modificarEstado()">
-              <option [defaultSelected]="">selecione una opcion:</option>
+          <div *ngIf="libroUsuario">
+            <p class="mt-5">Modificar el Estado:</p>
+            <select [(ngModel)]="estado" class="m-2">
+              <option disabled selected>selecione una opción:</option>
               <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
             </select>
-          </p>
+            <button class="btn btn-primary" (click)="modificarEstado()">Modificar</button>
+          </div>
         </div>
       </div>
     </div>

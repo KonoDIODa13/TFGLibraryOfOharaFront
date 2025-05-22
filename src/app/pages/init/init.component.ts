@@ -8,15 +8,13 @@ import { Component } from '@angular/core';
 })
 export class InitComponent {
 
-   mostrarFormularioInicioSesion: boolean=true;
+  mostrarFormularioInicioSesion: boolean = true;
 
+  mostrarFormulario(){
 
-   loggin(){
-    this.mostrarFormularioInicioSesion=true;
-   }
+    this.mostrarFormularioInicioSesion = !this.mostrarFormularioInicioSesion;
 
-   register(){
-    this.mostrarFormularioInicioSesion=false;
-   }
+  }
+
 
 }

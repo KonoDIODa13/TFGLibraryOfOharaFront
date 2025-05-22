@@ -5,7 +5,7 @@ export class LibrosUsuario {
   constructor(
     public usuario: Usuario,
     public libro: Libro,
-    public fecha_inicio: Date,
+    public fechaInicio: Date,
     public estado: string,
     public id?: number,
   ) { }

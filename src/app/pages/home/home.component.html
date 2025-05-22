@@ -6,59 +6,60 @@
       <path fill-rule="evenodd"
         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
     </svg>
-
-    <button class="btn btn-primary m-3" (click)="controladorBiblioteca()">
-      <i class="bi bi-list"></i> Mostrar Libreria
-    </button>
-
-    <button class="btn btn-primary m-3" (click)="controladorLibros()">
-      <i class="bi bi-list"></i> Ver Libros
-    </button>
     <h1 class="m-3">Library of Ohara</h1>
   </div>
 
-  <div class="d-flex">
-    <div class="col-2 bg-grey min-vh-50 p-3 sidebar" [ngClass]="{ 'd-none': !mostrarSideBar }">
-      {{usuario?.nombre}}
+  <div class="sidebar-container" [class.sidebar-visible]="mostrarSideBar">
+    <div class="sidebar-content">
+      {{ usuario!.nombre }}
       <ul class="nav flex-column">
-        <li class="nav-item">
-          Ajustes
-        </li>
-        <li class="nav-item" (click)="deslogear()">
-          Deslogear
-        </li>
-
+        <li class="nav-item" (click)="controladorLibros()">Mostrar Libros</li>
+        <li class="nav-item" (click)="controladorBiblioteca()">Mostrar Biblioteca</li>
+        <li class="nav-item" (click)="deslogear()">Deslogear</li>
       </ul>
+
+       <button class="btn btn-sm btn-light" (click)="controladorSideBar()">Cerrar</button>
+    </div>
     </div>
 
-    <div class="col-8 p-3" *ngIf="mostrarLibros">
-      <div *ngIf="librosUsuario; else nohaylibros">
-        <div class="card h-100 w-50" *ngFor="let libroUsuario of this.librosUsuario">
-          <img [src]="libroUsuario.libro.portada" class="card-img-top" alt="{{ libroUsuario.libro.titulo }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ libroUsuario.libro.titulo }}</h5>
-            <p class="card-text">Autor: {{ libroUsuario.libro.autor.nombre }} {{ libroUsuario.libro.autor.apellidos }}</p>
-            <button class="btn btn-primary" (click)="verLibro(libroUsuario.libro)">Ver más</button>
+    <div class="col-12 p-3" *ngIf="mostrarLibros">
+      <div *ngIf="librosUsuario?.length!=0; else nohaylibros">
+        <div class="container-fluid mt-4">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-4">
+            <div class="col" *ngFor="let libroUsuario of this.librosUsuario">
+              <div class="card h-100">
+                <img [src]="libroUsuario.libro.portada" class="card-img-top" [alt]="libroUsuario.libro.titulo">
+                <div class="card-body">
+                  <h5 class="card-title text-center">{{ libroUsuario.libro.titulo }}</h5>
+                  <p class="card-text">Autor: {{ libroUsuario.libro.autor.nombre }} {{
+                    libroUsuario.libro.autor.apellidos }}</p>
+                  <button class="btn btn-primary" (click)="verLibro(libroUsuario.libro)">Ver más</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <ng-template #nohaylibros>
         <p>Aún no hay libros en la lista.</p>
-        <p>Ve a la bliblioteca para buscar libros.</p>
+        <p>Ve a la biblioteca para buscar libros.</p>
       </ng-template>
     </div>
 
-    <div class="col-8 p-3" *ngIf="mostrarbiblioteca">
-      <p class="center">Biblioteca</p>
-      <div class="card h-100 w-50" *ngFor="let libro of this.libros">
-        <img [src]="libro.portada" class="card-img-top" alt="{{ libro.titulo }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ libro.titulo }}</h5>
-          <p class="card-text">Autor: {{ libro.autor.nombre }} {{ libro.autor.apellidos }}</p>
-          <button class="btn btn-primary" (click)="verLibro(libro)">Ver más</button>
+    <div class="col-12 p-3" *ngIf="mostrarbiblioteca">
+      <div class="container-fluid mt-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-4">
+          <div class="col" *ngFor="let libro of libros">
+            <div class="card h-100">
+              <img [src]="libro.portada" class="card-img-top" [alt]="libro.titulo">
+              <div class="card-body">
+                <h5 class="card-title text-center">{{ libro.titulo }}</h5>
+                <p class="card-text">Autor: {{ libro.autor.nombre }} {{ libro.autor.apellidos }}</p>
+                <button class="btn btn-primary" (click)="verLibro(libro)">Ver más</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
   </div>
-</div>
